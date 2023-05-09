@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import './App.css';
 
 const App = () => {
-
   const [exercise, setExercise] = useState('');
   const [weight, setWeight] = useState(0);
   const [repetition, setRepetition] = useState(0);
-  const [exSets, setExSets] = useState([]);
+  const [sets, setSets] = useState([{
+    weight: 0,
+    repetition: 0,
+  }]);
 
   const exercises = [
     "squat", 
@@ -19,13 +21,11 @@ const App = () => {
     console.log("Exercise", exercise);
     console.log("Weight", weight);
     console.log("Repetition", repetition);
+    console.log("Sets", sets);
   }
 
-  const handleAddSet = (index,event) => {
-    // add the current weight and repetition values as a new set to the sets state
-   
-    // Reset weight and rep input to initial values
-
+  const handleAddSet = () => {
+    setSets([...sets, { weight: 0, repetition: 0 }]);
   }
   
   return (
@@ -39,6 +39,23 @@ const App = () => {
             <option key={ex} value={ex}>{ex}</option>
             ))}
         </select>
+        {sets.map((set, index) => (
+          <div key={index}>
+            <input 
+              type="number"
+              placeholder='Enter weight in kgs'
+              value={set.weight}
+            />
+            <input
+              type="number"
+              placeholder="Enter repetitions"
+              value={set.repetition}
+              min="1"
+              max="100"
+              step="1"
+            />  
+          </div>
+        ))}
         <input
           type="number"
           placeholder="Enter weight in kgs"
@@ -55,7 +72,10 @@ const App = () => {
           step="1"
         />
         {/* add addSet button here */}
-        <button type="button">Add Set</button>
+        <button 
+          type="button"
+          onClick={handleAddSet}
+        >Add Set</button>
         <button type="button">Remove Set</button>
         <button type="submit">Submit</button>
       </form>
