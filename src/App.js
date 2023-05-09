@@ -27,6 +27,26 @@ const App = () => {
   const handleAddSet = () => {
     setSets([...sets, { weight: 0, repetition: 0 }]);
   }
+
+  const handleWeightChange = (index, value) => {
+    // create a new array iterating through the sets array
+    const updatedSet = sets.map((set, idx) => {
+      if (idx === index) {
+        return {
+          ...set, weight: value,
+        };
+      } else {
+        return set;
+      }
+    });
+    
+    // update the sets stae with the updatedSets array
+    setSets(updatedSet);
+  }
+  
+  const handleRepsChange = () => {
+
+  }
   
   return (
     <div className="App">
