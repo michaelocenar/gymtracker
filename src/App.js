@@ -44,8 +44,18 @@ const App = () => {
     setSets(updatedSet);
   }
   
-  const handleRepsChange = () => {
+  const handleRepsChange = (index, value) => {
+    const updatedSet = sets.map((set, idx) => {
+      if (idx === index) {
+        return {
+          ...set, repetition: value,
+        };
+      } else {
+        return set;
+      }
+    });
 
+    setSets(updatedSet);
   }
   
   return (
@@ -65,18 +75,20 @@ const App = () => {
               type="number"
               placeholder='Enter weight in kgs'
               value={set.weight}
+              onChange={(e) => handleWeightChange(index, e.target.value)}
             />
             <input
               type="number"
               placeholder="Enter repetitions"
               value={set.repetition}
+              onChange={(e) => handleRepsChange(index, e.target.value)}
               min="1"
               max="100"
               step="1"
             />  
           </div>
         ))}
-        <input
+        {/* <input
           type="number"
           placeholder="Enter weight in kgs"
           value={weight} 
@@ -90,7 +102,7 @@ const App = () => {
           min="1"
           max="100"
           step="1"
-        />
+        /> */}
         {/* add addSet button here */}
         <button 
           type="button"
