@@ -6,9 +6,7 @@ const App = () => {
   const [exercise, setExercise] = useState('');
   const [weight, setWeight] = useState(0);
   const [repetition, setRepetition] = useState(0);
-  const [exSets, setExSets] = useState([
-    {dynoweight:0,dynorep:0}
-  ]);
+  const [exSets, setExSets] = useState([]);
 
   const exercises = [
     "squat", 
@@ -19,18 +17,15 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Exercise", exercise);
-    // console.log("Weight", weight);
-    // console.log("Repetition", repetition);
-    //console.log("DynoWeight", dynoWeight);
-    //console.log("DynoRep",dynoRep);
+    console.log("Weight", weight);
+    console.log("Repetition", repetition);
   }
 
   const handleAddSet = (index,event) => {
     // add the current weight and repetition values as a new set to the sets state
-    let set = [...exSets];
-    set[index][event.target.name] = event.target.value;
+   
     // Reset weight and rep input to initial values
-    setExSets(set);
+
   }
   
   return (
@@ -44,7 +39,7 @@ const App = () => {
             <option key={ex} value={ex}>{ex}</option>
             ))}
         </select>
-        {/* <input
+        <input
           type="number"
           placeholder="Enter weight in kgs"
           value={weight} 
@@ -58,31 +53,9 @@ const App = () => {
           min="1"
           max="100"
           step="1"
-        /> */}
-        {exSets.map((input,index) => {
-          return (
-            <div key={index}>
-              <input
-                type="number"
-                dynoWeight='weight'
-                placeholder='Weight'
-                value={input.dynoweight}
-                min="0"
-                onChange={event => handleAddSet(index, event)}
-              />
-              <input
-                type="number"
-                dynoRep='rep'
-                placeholder='Repetition'
-                value={input.dynorep}
-                min="1"
-                max="100"
-                step="1"
-                onChange={event => handleAddSet(index, event)}
-              />
-            </div>
-          )
-          })}
+        />
+        {/* add addSet button here */}
+        <button type="button">Add Set</button>
         <button type="submit">Submit</button>
       </form>
     </div>
