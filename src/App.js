@@ -56,6 +56,7 @@ const App = () => {
         />
         {/* add addSet button here */}
         <button type="button">Add Set</button>
+        <button type="button">Remove Set</button>
         <button type="submit">Submit</button>
       </form>
     </div>
