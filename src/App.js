@@ -57,6 +57,13 @@ const App = () => {
 
     setSets(updatedSet);
   }
+
+  const handleRemoveSet = () => {
+    const slicedSet = sets.slice(0,-1);
+    if (sets.length > 1) {
+      setSets(slicedSet);
+    } 
+  }
   
   return (
     <div className="App">
@@ -88,27 +95,14 @@ const App = () => {
             />  
           </div>
         ))}
-        {/* <input
-          type="number"
-          placeholder="Enter weight in kgs"
-          value={weight} 
-          onChange={(e) => setWeight(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Enter repetitions"
-          value={repetition} 
-          onChange={(e) => setRepetition(e.target.value)}
-          min="1"
-          max="100"
-          step="1"
-        /> */}
-        {/* add addSet button here */}
         <button 
           type="button"
           onClick={handleAddSet}
         >Add Set</button>
-        <button type="button">Remove Set</button>
+        <button 
+          type="button"
+          onClick={handleRemoveSet}
+        >Remove Set</button>
         <button type="submit">Submit</button>
       </form>
     </div>
