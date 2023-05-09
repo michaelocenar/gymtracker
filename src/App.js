@@ -1,50 +1,112 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 const App = () => {
-  const [counter, setCounter] = useState(0);
-  // Below is basically what line 6 is without destructuring
-  // const counterState = useState(1);
-  // const counter = counterState[0];
-  // const setCounter = counterstate[1];
+  const [exercise, setExercise] = useState('');
+  const [weight, setWeight] = useState(0);
+  const [repetition, setRepetition] = useState(0);
+  const [sets, setSets] = useState([{
+    weight: 0,
+    repetition: 0,
+  }]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((prevCounter) => (prevCounter >= 100 ? 0 : prevCounter + 10));
-    }, 1);
+  const exercises = [
+    "squat", 
+    "bench press", 
+    "deadlift",
+  ];
 
-    return () => {
-      clearInterval(interval);
-    }
-  }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Exercise", exercise);
+    console.log("Weight", weight);
+    console.log("Repetition", repetition);
+    console.log("Sets", sets);
+  }
 
+  const handleAddSet = () => {
+    setSets([...sets, { weight: 0, repetition: 0 }]);
+  }
+
+  const handleWeightChange = (index, value) => {
+    // create a new array iterating through the sets array
+    const updatedSet = sets.map((set, idx) => {
+      if (idx === index) {
+        return {
+          ...set, weight: value,
+        };
+      } else {
+        return set;
+      }
+    });
+    
+    // update the sets stae with the updatedSets array
+    setSets(updatedSet);
+  }
+  
+  const handleRepsChange = (index, value) => {
+    const updatedSet = sets.map((set, idx) => {
+      if (idx === index) {
+        return {
+          ...set, repetition: value,
+        };
+      } else {
+        return set;
+      }
+    });
+
+    setSets(updatedSet);
+  }
+
+  const handleRemoveSet = () => {
+    const slicedSet = sets.slice(0,-1);
+    if (sets.length > 1) {
+      setSets(slicedSet);
+    } 
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/poop.js</code> and save to reload.
-        </p>
-        <p>Counter: {counter}</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handleSubmit}>
+        <select 
+          value={exercise} 
+          onChange={(e) => setExercise(e.target.value)}>
+            <option value=""> Select an exercise </option>
+              {exercises.map((ex) => (
+            <option key={ex} value={ex}>{ex}</option>
+            ))}
+        </select>
+        {sets.map((set, index) => (
+          <div key={index}>
+            <input 
+              type="number"
+              placeholder='Enter weight in kgs'
+              value={set.weight}
+              onChange={(e) => handleWeightChange(index, e.target.value)}
+            />
+            <input
+              type="number"
+              placeholder="Enter repetitions"
+              value={set.repetition}
+              onChange={(e) => handleRepsChange(index, e.target.value)}
+              min="1"
+              max="100"
+              step="1"
+            />  
+          </div>
+        ))}
+        <button 
+          type="button"
+          onClick={handleAddSet}
+        >Add Set</button>
+        <button 
+          type="button"
+          onClick={handleRemoveSet}
+        >Remove Set</button>
+        <button type="submit">Submit</button>
+      </form>
     </div>
-    
   );
 }
 
 export default App;
-
-//something funny
-// hello!
-// is this how we discuss changes to the app? 
-// no that's usually done through pull requests
-// ah that makes sense! 
